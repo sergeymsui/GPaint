@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: cmake
-      run: cmake .
-    - name: cmake build
-      run: cmake --build . --parallel
+    - name: Build CMake
+      uses: ashutoshvarma/action-cmake-build@v1
+      with:
+        # Build directory where build files will be generated
+        build-dir: ${{ runner.workspace }}/build
+        # CMake build type (Release, Debug, MinSizeRel, RelWithDebInfo)
+        build-type: Release
+        # C Compiler for toolchain
+        parallel: 4
