@@ -7,7 +7,29 @@
 class GP_ActionGroupManager : public QObject {
     Q_OBJECT
 public:
-    explicit GP_ActionGroupManager(GP_ApplicationWindow* parent = nullptr) {}
+    explicit GP_ActionGroupManager(GP_ApplicationWindow* parent = nullptr)
+        : QObject(parent),
+        block(new QActionGroup(this)),
+        circle(new QActionGroup(this)),
+        curve(new QActionGroup(this)),
+        edit(new QActionGroup(this)),
+        ellipse(new QActionGroup(this)),
+        file(new QActionGroup(this)),
+        dimension(new QActionGroup(this)),
+        info(new QActionGroup(this)),
+        layer(new QActionGroup(this)),
+        line(new QActionGroup(this)),
+        modify(new QActionGroup(this)),
+        options(new QActionGroup(this)),
+        other(new QActionGroup(this)),
+        polyline(new QActionGroup(this)),
+        restriction(new QActionGroup(this)),
+        select(new QActionGroup(this)),
+        snap(new QActionGroup(this)),
+        snap_extras(new QActionGroup(this)),
+        view(new QActionGroup(this)),
+        widgets(new QActionGroup(this))
+    {}
 
     QActionGroup* block = nullptr;
     QActionGroup* circle = nullptr;

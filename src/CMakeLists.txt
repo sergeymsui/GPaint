@@ -19,6 +19,7 @@ list(APPEND HDR_PATHS
         GP_ActionGroupManager.h
         GP_ActionHandler.h
         GP_ActionFactory.h
+        GP_WidgetFactory.h
         )
 
 list(APPEND SRC_PATHS
@@ -27,6 +28,7 @@ list(APPEND SRC_PATHS
         GP_ApplicationWindow.cpp
         GP_Application.cpp
         GP_ActionGroupManager.cpp
+        GP_WidgetFactory.cpp
         )
 
 list(APPEND RESOURCES
