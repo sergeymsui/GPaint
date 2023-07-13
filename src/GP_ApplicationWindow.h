@@ -19,4 +19,12 @@ private:
 
     GP_ActionGroupManager* ag_manager = nullptr;
     QMap<GP_ActionFactory::EnumEnv, QAction*> a_map;
+
+public slots:
+    void slotFileOpen() {};
+    void slotZoomPan() {};
+    void slotFileNewNew() {};
+    void slotFileSave() {};
+    void slotFileSaveAs() {};
+    void slotFileQuit() {};
 };
