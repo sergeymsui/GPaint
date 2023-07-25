@@ -3,17 +3,19 @@
 #include <QDebug>
 #include <QSettings>
 #include <QSplashScreen>
+#include <QFontDatabase>
 
 #include "GP_ApplicationWindow.h"
 #include "GP_Application.h"
 
 int main(int argc, char** argv) {
-    // QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
     GP_Application app(argc, argv);
     QCoreApplication::setOrganizationName("GPaint");
     QCoreApplication::setApplicationName("GPaint");
     QCoreApplication::setApplicationVersion("0.01");
+
+    GP_Application::setStyle("fusion");
 
     QSettings settings;
 
@@ -28,7 +30,7 @@ int main(int argc, char** argv) {
         splash->setAttribute(Qt::WA_DeleteOnClose);
         splash->show();
         splash->showMessage(QObject::tr("Loading.."), Qt::AlignRight|Qt::AlignBottom, Qt::black);
-        app.processEvents();
+        GP_Application::processEvents();
         qDebug() << "main: splashscreen: OK";
     }
 

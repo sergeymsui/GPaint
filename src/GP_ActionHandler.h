@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <QDebug>
 #include <QObject>
 
 class GP_ActionHandler :  public QObject {
@@ -8,4 +9,9 @@ class GP_ActionHandler :  public QObject {
 public:
     explicit GP_ActionHandler(QObject* parent = nullptr);
     ~GP_ActionHandler() override = default;
+
+public slots:
+    void slotZoomPan() {
+        qDebug() << "slotZoomPan" ;
+    }
 };

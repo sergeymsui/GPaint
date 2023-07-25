@@ -4,6 +4,12 @@
 #include "GP_ActionHandler.h"
 #include "GP_ActionGroupManager.h"
 
+#include <QIcon>
+#include <QPainter>
+#include <QSvgRenderer>
+
+
+
 GP_ActionFactory::GP_ActionFactory(GP_ApplicationWindow *parent, GP_ActionHandler *a_handler)
     : QObject(parent),
     using_theme(false),
@@ -14,35 +20,47 @@ void GP_ActionFactory::fillActionContainer(QMap<EnumEnv, QAction *> &a_map, GP_A
     auto panningZoomAction = new QAction(tr("Zoom &Panning"), agm->other);
     panningZoomAction->setIcon(QIcon(":/icons/zoom_pan.svg"));
     connect(panningZoomAction, SIGNAL(triggered()), action_handler, SLOT(slotZoomPan()));
-    panningZoomAction->setObjectName("ZoomPan");
     a_map[EnumEnv::ZoomPan] = panningZoomAction;
 
     auto newFileAction = new QAction(tr("&New"), agm->other);
-    newFileAction->setIcon(QIcon(":/icons/new.svg"));
-    connect(newFileAction, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
-    newFileAction->setObjectName("FileNew");
+    newFileAction->setIcon(QIcon(":/icons/new.png"));
+    connect(newFileAction, SIGNAL(triggered()), main_window, SLOT(slotFileNew()));
     a_map[EnumEnv::FileNew] = newFileAction;
 
     auto openFileAction = new QAction(tr("&Open..."), agm->file);
-    openFileAction->setIcon(QIcon(":/icons/open.svg"));
+    openFileAction->setIcon(QIcon(":/icons/open.png"));
     openFileAction->setShortcut(QKeySequence::Open);
     connect(openFileAction, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
-    openFileAction->setObjectName("FileOpen");
     a_map[EnumEnv::FileOpen] = openFileAction;
 
     auto saveAction = new QAction(tr("&Save"), agm->file);
-    saveAction->setIcon(QIcon(":/icons/save.svg"));
+    if (using_theme)
+        saveAction->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/save.svg")));
+    else
+        saveAction->setIcon(QIcon(":/icons/save.png"));
     saveAction->setShortcut(QKeySequence::Save);
     connect(saveAction, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
-    saveAction->setObjectName("FileSave");
     a_map[EnumEnv::FileSave] = saveAction;
 
     auto saveAsAction = new QAction(tr("Save &as..."), agm->file);
-    saveAsAction->setIcon(QIcon(":/icons/save_as.svg"));
+    saveAsAction->setIcon(QIcon(":/icons/save-as.png"));
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(saveAsAction, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
-    saveAsAction->setObjectName("FileSaveAs");
     a_map[EnumEnv::FileSaveAs] = saveAsAction;
+
+    auto printAction = new QAction(tr("&Print..."), agm->file);
+    printAction->setIcon(QIcon(":/icons/print.png"));
+    printAction->setShortcut(QKeySequence::Print);
+    connect(printAction, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), printAction, SLOT(setChecked(bool)));
+    a_map[FilePrint] = printAction;
+
+    auto printPreviewAction = new QAction(tr("Print Pre&view"), agm->file);
+    printPreviewAction->setIcon(QIcon(":/icons/print_preview.svg"));
+    printPreviewAction->setCheckable(true);
+    connect(printPreviewAction, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
+    // connect(main_window, SIGNAL(printPreviewChanged(bool)), printPreviewAction, SLOT(setChecked(bool)));
+    a_map[FilePrintPreview] = printPreviewAction;
 
     auto quitAction = new QAction(tr("&Quit"), agm->file);
     quitAction->setIcon(QIcon(":/icons/quit.svg"));

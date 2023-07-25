@@ -4,13 +4,12 @@ project(app)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Svg
         REQUIRED)
 
 list(APPEND HDR_PATHS
@@ -20,6 +19,11 @@ list(APPEND HDR_PATHS
         GP_ActionHandler.h
         GP_ActionFactory.h
         GP_WidgetFactory.h
+        GP_global.h
+        GP_global.h
+        GP_CentralWidget.h
+        GP_Document.h
+        GP_TabWidget.h
         )
 
 list(APPEND SRC_PATHS
@@ -29,18 +33,29 @@ list(APPEND SRC_PATHS
         GP_Application.cpp
         GP_ActionGroupManager.cpp
         GP_WidgetFactory.cpp
+        GP_TabWindow.cpp
+        GP_CentralWidget.cpp
+        GP_TabWidget.cpp
+        GP_Document.cpp
         )
 
 list(APPEND RESOURCES
         ../data/icons.qrc
         )
 
-add_executable(app main.cpp ${HDR_PATHS} ${SRC_PATHS} ${RESOURCES})
+qt6_add_resources(QRC_RESOURCES
+        ${RESOURCES}
+        )
+
+message(STATUS "${QRC_RESOURCES}")
+
+add_executable(app main.cpp ${HDR_PATHS} ${SRC_PATHS} ${QRC_RESOURCES})
 
 target_link_libraries(app
         Qt6::Core
         Qt6::Gui
         Qt6::Widgets
+        Qt6::Svg
         )
 
 if (WIN32)

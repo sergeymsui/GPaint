@@ -1,10 +1,15 @@
 
 #pragma once
 
+#include <QVector>
+#include <QTabWidget>
 #include <QMainWindow>
 
 #include "GP_ActionFactory.h"
+#include "GP_TabWindow.h"
 
+class GP_Document;
+class GP_TabWidget;
 class GP_ActionHandler;
 class GP_ActionGroupManager;
 
@@ -20,10 +25,15 @@ private:
     GP_ActionGroupManager* ag_manager = nullptr;
     QMap<GP_ActionFactory::EnumEnv, QAction*> a_map;
 
+    QSharedPointer<GP_TabWidget> tabAreaCAD;
+    QVector<QSharedPointer<GP_TabWindow>> m_tabWindows; // tab window buffer
+
+    QSharedPointer<GP_TabWindow> fileNew(GP_Document*);
 public slots:
+
     void slotFileOpen() {};
     void slotZoomPan() {};
-    void slotFileNewNew() {};
+    void slotFileNew();;
     void slotFileSave() {};
     void slotFileSaveAs() {};
     void slotFileQuit() {};

@@ -17,6 +17,8 @@ public:
         FileNewTemplate,
         FileSave,
         FileSaveAs,
+        FilePrint,
+        FilePrintPreview,
         FileQuit,
         // --
         ZoomPan,
